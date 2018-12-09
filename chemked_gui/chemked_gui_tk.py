@@ -1,6 +1,7 @@
 # import os
 # import sys
 from tkinter import *
+from tkinter import ttk
 # import tkinter.messagebox
 from pyked import __version__, chemked
 
@@ -14,10 +15,11 @@ class MainWindow(Frame):
         # set up the window
         Frame.__init__(self, parent, width=800, height=600)
         self.parent = parent
-        self.pack()
+        self.pack(fill=BOTH, expand=1)
         self.winfo_toplevel().title("ChemKED")
         self.center_window()
         self.create_menu_bar()
+        self.create_status_bar()
 
         # the data the user will modify and export with the GUI
         self.data = {
@@ -96,10 +98,13 @@ class MainWindow(Frame):
         self.data["chemked-version"].insert(END, __version__)
 
     def create_status_bar(self):
-        pass
+        # doesn't look quite right, TODO
+        status = Label(self, text="Status: Ready", bd=1, relief=SUNKEN)
+        status.pack(side=BOTTOM, fill=X, anchor=W)
 
     def create_tabs(self):
-        pass
+        tabs = ttk.Notebook(self)
+
 
     def verify_inputs(self):
         pass
