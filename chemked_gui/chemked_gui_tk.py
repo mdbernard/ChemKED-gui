@@ -114,11 +114,14 @@ class MainWindow(Frame):
         tab_1_metadata = Frame(self.tab_1)
         tab_1_reference = Frame(self.tab_1)
 
+        # section headers
         label_metadata = Label(tab_1_metadata, text="Metadata", justify=CENTER)
         label_metadata.grid(columnspan=6, row=0, column=0, sticky=N)
         label_reference = Label(tab_1_reference, text="Reference", justify=CENTER)
         label_reference.grid(columnspan=6, row=0, column=0, sticky=N)
 
+        #TODO switch from grid to pack so things expand with window size
+        # file and chemked versions
         label_file_version = Label(tab_1_metadata, text="File Version")
         label_file_version.grid(columnspan=3, row=1, column=0, sticky=E)
         label_chemked_version = Label(tab_1_metadata, text="ChemKED Version")
@@ -131,6 +134,15 @@ class MainWindow(Frame):
         entry_chemked_version = self.data["chemked-version"]
         entry_chemked_version.insert(index=0, string=__version__)
         entry_chemked_version.grid(columnspan=3, row=2, column=3)
+
+        separator_metadata = Frame(tab_1_metadata, height=1, bg="black")
+        separator_metadata.grid(columnspan=6, row=3, column=0, sticky=N+S+E+W)
+
+        # file author
+        label_file_author = Label(tab_1_metadata, text="File Author(s)", justify=CENTER)
+        label_file_author.grid(columnspan=6, row=4, column=0)
+
+
 
         tab_1_metadata.pack(side=LEFT, fill=BOTH, expand=1)
         tab_1_reference.pack(side=RIGHT, fill=BOTH, expand=1)
