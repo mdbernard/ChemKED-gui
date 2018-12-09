@@ -20,6 +20,7 @@ class MainWindow(Frame):
         self.center_window()
         self.create_menu_bar()
         self.create_status_bar()
+        self.create_tabs()
 
         # the data the user will modify and export with the GUI
         self.data = {
@@ -103,13 +104,27 @@ class MainWindow(Frame):
         status.pack(side=BOTTOM, fill=X, anchor=W)
 
     def create_tabs(self):
-        tabs = ttk.Notebook(self)
+        self.tabs = ttk.Notebook(self)
+        self.tabs.pack(side=TOP, fill=BOTH, expand=1)
 
+        # define tabs
+        self.tab_meta = Frame(self.tabs)
+        self.tab_comp = Frame(self.tabs)
+        self.tab_data = Frame(self.tabs)
+
+        #TODO fill tabs with contents
+
+        # add all tabs to tabs frame
+        self.tabs.add(self.tab_meta, text="Metadata")
+        self.tabs.add(self.tab_comp, text="Experiment Info")
+        self.tabs.add(self.tab_data, text="Datapoints")
 
     def verify_inputs(self):
+        #TODO
         pass
 
     def export_to_yaml(self):
+        #TODO
         pass
 
 
