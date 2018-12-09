@@ -9,6 +9,8 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QMainWindow,
 from PyQt5.QtGui import QIcon
 from pyked import __version__, chemked
 
+from PyQt5.Qt.lib.QtWidgets import (QApplication)
+
 
 class Window(QMainWindow):
     """Controls main window size, location, and menu bar.

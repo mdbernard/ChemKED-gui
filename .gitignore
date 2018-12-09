@@ -208,3 +208,6 @@ ENV/
 .mypy_cache/
 .idea/*
 Dev/*.yaml
+chemked_gui/tk_reference.py
+chemked_gui/tk_reference_3.py
+chemked_gui/tk_reference_2.py
