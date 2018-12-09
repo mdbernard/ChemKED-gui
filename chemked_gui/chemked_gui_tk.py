@@ -21,33 +21,20 @@ class MainWindow(Frame):
         self.create_menu_bar()
         self.create_status_bar()
 
-        # fill in the tabs with their contents
-        self.tabs = ttk.Notebook(self)
-        self.tabs.pack(side=TOP, fill=BOTH, expand=1)
-        self.tab_meta = Frame(self.tabs)
-        self.tab_comp = Frame(self.tabs)
-        self.tab_data = Frame(self.tabs)
-        self.fill_tabs()
-
         # the data the user will modify and export with the GUI
+        # blank strings to be replaced with Entry() widgets by fill_data()
         self.data = {
-            "file-authors": [
-                {"name": Entry(self),
-                 "ORCID": Entry(self)}
-            ],
-            "file-version": Entry(self),
-            "chemked-version": Entry(self),
+            "file-authors": [],
+            "file-version": '',
+            "chemked-version": '',
             "reference": {
-                "doi": Entry(self),
-                "authors": [
-                    {"name": Entry(self),
-                     "ORCID": Entry(self)}
-                ],
-                "journal": Entry(self),
-                "year": Entry(self),
-                "volume": Entry(self),
-                "pages": Entry(self),
-                "detail": Entry(self)
+                "doi": '',
+                "authors": [],
+                "journal": '',
+                "year": '',
+                "volume": '',
+                "pages": '',
+                "detail": ''
             },
             "experiment-type": ttk.Combobox(self, values=["ignition-delay"]),
             "apparatus": {
@@ -74,7 +61,14 @@ class MainWindow(Frame):
                                                             "min", "d/dt max extrapolated"]),
             }
         }
-        self.set_init_data()
+
+        # fill in the tabs with their contents
+        self.tabs = ttk.Notebook(self)
+        self.tabs.pack(side=TOP, fill=BOTH, expand=1)
+        self.tab_1 = Frame(self.tabs)  # Metadata
+        self.tab_2 = Frame(self.tabs)  # Experiment Info
+        self.tab_3 = Frame(self.tabs)  # Datapoints
+        self.fill_tabs()
 
     def center_window(self):
         """ Centers the window on the user's screen. """
@@ -110,16 +104,41 @@ class MainWindow(Frame):
         pass
 
     def create_status_bar(self):
-        status = Label(self, text="Status: Ready", bd=1, relief=SUNKEN)
+        status = Label(self, text="Status: Ready", justify=LEFT, bd=1, relief=SUNKEN)
         status.pack(side=BOTTOM, fill=X, anchor=W)
 
     def fill_tabs(self):
         #TODO fill tabs with contents
 
-        # add all tabs to tabs frame
-        self.tabs.add(self.tab_meta, text="Metadata")
-        self.tabs.add(self.tab_comp, text="Experiment Info")
-        self.tabs.add(self.tab_data, text="Datapoints")
+        # ---TAB 1: METADATA AND REFERENCES---
+        tab_1_metadata = Frame(self.tab_1)
+        tab_1_reference = Frame(self.tab_1)
+
+        label_metadata = Label(tab_1_metadata, text="Metadata", justify=CENTER)
+        label_metadata.grid(columnspan=6, row=0, column=0, sticky=N)
+        label_reference = Label(tab_1_reference, text="Reference", justify=CENTER)
+        label_reference.grid(columnspan=6, row=0, column=0, sticky=N)
+
+        label_file_version = Label(tab_1_metadata, text="File Version")
+        label_file_version.grid(columnspan=3, row=1, column=0, sticky=E)
+        label_chemked_version = Label(tab_1_metadata, text="ChemKED Version")
+        label_chemked_version.grid(columnspan=3, row=2, column=0, sticky=E)
+
+        self.data["file-version"] = Entry(tab_1_metadata)
+        entry_file_version = self.data["file-version"]
+        entry_file_version.grid(columnspan=3, row=1, column=3)
+        self.data["chemked-version"] = Entry(tab_1_metadata)
+        entry_chemked_version = self.data["chemked-version"]
+        entry_chemked_version.insert(index=0, string=__version__)
+        entry_chemked_version.grid(columnspan=3, row=2, column=3)
+
+        tab_1_metadata.pack(side=LEFT, fill=BOTH, expand=1)
+        tab_1_reference.pack(side=RIGHT, fill=BOTH, expand=1)
+
+        # ---ADD ALL TABS TO THE TAB FRAME---
+        self.tabs.add(self.tab_1, text="Metadata")
+        self.tabs.add(self.tab_2, text="Experiment Info")
+        self.tabs.add(self.tab_3, text="Datapoints")
 
     def verify_inputs(self):
         #TODO
