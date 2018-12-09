@@ -20,7 +20,14 @@ class MainWindow(Frame):
         self.center_window()
         self.create_menu_bar()
         self.create_status_bar()
-        self.create_tabs()
+
+        # fill in the tabs with their contents
+        self.tabs = ttk.Notebook(self)
+        self.tabs.pack(side=TOP, fill=BOTH, expand=1)
+        self.tab_meta = Frame(self.tabs)
+        self.tab_comp = Frame(self.tabs)
+        self.tab_data = Frame(self.tabs)
+        self.fill_tabs()
 
         # the data the user will modify and export with the GUI
         self.data = {
@@ -42,9 +49,9 @@ class MainWindow(Frame):
                 "pages": Entry(self),
                 "detail": Entry(self)
             },
-            "experiment-type": '',  #TODO this should be a combo box
+            "experiment-type": ttk.Combobox(self, values=["ignition-delay"]),
             "apparatus": {
-                "kind": '',  #TODO this should be a combo box
+                "kind": ttk.Combobox(self, values=["rapid compression machine", "shock tube"]),
                 "institution": Entry(self),
                 "facility": Entry(self)
             },
@@ -60,9 +67,11 @@ class MainWindow(Frame):
                      "InChI": Entry(self),
                      "amount": Entry(self)}
                 ],
-                "kind": '',  #TODO this should be a combo box
-                "ignition-target": '', #TODO this should be a combo box
-                "ignition-type": '', #TODO this should be a combo box
+                "kind": ttk.Combobox(self, values=["mass fraction", "mole fraction", "mole percent"]),
+                "ignition-target": ttk.Combobox(self, values=["temperature", "pressure",
+                                                              "OH", "OH*", "CH", "CH*"]),
+                "ignition-type": ttk.Combobox(self, values=["d/dt max", "max", "1/2 max",
+                                                            "min", "d/dt max extrapolated"]),
             }
         }
         self.set_init_data()
@@ -93,25 +102,18 @@ class MainWindow(Frame):
         menu.add_cascade(label="Edit", menu=edit_menu)
 
     def preferences(self):
+        #TODO
         print("This feature will be added in a future update!")
 
     def set_init_data(self):
-        self.data["chemked-version"].insert(END, __version__)
+        # This method might be completely unnecessary
+        pass
 
     def create_status_bar(self):
-        # doesn't look quite right, TODO
         status = Label(self, text="Status: Ready", bd=1, relief=SUNKEN)
         status.pack(side=BOTTOM, fill=X, anchor=W)
 
-    def create_tabs(self):
-        self.tabs = ttk.Notebook(self)
-        self.tabs.pack(side=TOP, fill=BOTH, expand=1)
-
-        # define tabs
-        self.tab_meta = Frame(self.tabs)
-        self.tab_comp = Frame(self.tabs)
-        self.tab_data = Frame(self.tabs)
-
+    def fill_tabs(self):
         #TODO fill tabs with contents
 
         # add all tabs to tabs frame
